@@ -22,6 +22,7 @@ public class Cargo {
     private Float height;
     private String tare;
     private String additionalInfo;
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "shipper_id", nullable = false)
