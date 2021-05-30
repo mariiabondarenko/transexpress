@@ -13,7 +13,6 @@ public class PaymentService {
     public void setPaymentRepository(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
-
     public void savePayment(Payment payment){
         this.paymentRepository.save(payment);
     }
