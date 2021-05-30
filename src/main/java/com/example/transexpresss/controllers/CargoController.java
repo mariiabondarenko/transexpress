@@ -5,10 +5,7 @@ import com.example.transexpresss.entities.Cargo;
 import com.example.transexpresss.entities.Payment;
 import com.example.transexpresss.entities.Route;
 import com.example.transexpresss.entities.Shipper;
-import com.example.transexpresss.services.CargoService;
-import com.example.transexpresss.services.PaymentService;
-import com.example.transexpresss.services.RouteService;
-import com.example.transexpresss.services.ShipperService;
+import com.example.transexpresss.services.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -23,7 +20,6 @@ public class CargoController {
 
     private static final Logger logger = LogManager.getLogger(CargoController.class);
 
-
     private final CargoService cargoService;
     private final ShipperService shipperService;
     private final PaymentService paymentService;
@@ -36,11 +32,11 @@ public class CargoController {
         this.routeService = routeService;
     }
 
+    //TODO all transports + to UserController
     @GetMapping("/")
     public String index(Model model) {
         logger.info("Loading all cargoes from database");
         model.addAttribute("cargoes", cargoService.getAllCargoes());
-        //TODO all transports
         return "index";
     }
 
@@ -66,6 +62,7 @@ public class CargoController {
             shipperService.saveShipper(shipper);
             cargo.setRoute(route);
             cargo.setPayment(payment);
+            cargo.setShipper(shipper);
             logger.info("Add a Route object in database");
             routeService.saveRoute(route);
             logger.info("Add a Payment object in database");
