@@ -1,6 +1,5 @@
 package com.example.transexpresss.controllers;
 
-
 import com.example.transexpresss.entities.Cargo;
 import com.example.transexpresss.entities.Payment;
 import com.example.transexpresss.entities.Route;
@@ -14,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CargoController {
@@ -24,23 +26,36 @@ public class CargoController {
     private final ShipperService shipperService;
     private final PaymentService paymentService;
     private final RouteService routeService;
+    private final TransportService transportService;
+    private final RequestService requestService;
 
-    public CargoController(CargoService cargoService, ShipperService shipperService, PaymentService paymentService, RouteService routeService) {
+    public CargoController(CargoService cargoService, ShipperService shipperService, PaymentService paymentService, RouteService routeService, TransportService transportService, RequestService requestService) {
         this.cargoService = cargoService;
         this.shipperService = shipperService;
         this.paymentService = paymentService;
         this.routeService = routeService;
+        this.transportService = transportService;
+        this.requestService = requestService;
     }
 
-    //TODO all transports + to UserController
     @GetMapping("/")
     public String index(Model model) {
         logger.info("Loading all cargoes from database");
+        List<Integer> statistic = new ArrayList<>();
+        statistic.add(0, shipperService.getAllShippers().size());
+        statistic.add(1, transportService.getAllTransports().size());
+        statistic.add(2, cargoService.getAllCargoes().size());
+        statistic.add(3, requestService.getAllRequests().size());
+        model.addAttribute("statistic", statistic);
         model.addAttribute("cargoes", cargoService.getAllCargoes());
         return "index";
     }
+    /*
+    @GetMapping("/")
+    public String index(Model model) {
+        return "test";
+    }*/
 
-    // TODO add shipper
     @GetMapping("/shipper/add_cargo")
     public String addCargo(Model model){
         logger.info("Loading a shipper/add_cargo site");
@@ -50,7 +65,6 @@ public class CargoController {
         return "/shipper/add_cargo";
     }
 
-    // TODO add shipper
     @PostMapping("/shipper/add_cargo")
     public String addCargoSubmit(@Valid Route route, @Valid Payment payment,@Valid Cargo cargo ,BindingResult result) {
         if(result.hasErrors()){
@@ -87,18 +101,39 @@ public class CargoController {
         return "one_cargo";
     }
 
-    @RequestMapping(value = "/search_cargo")
-    public String findCargoByParameter(@RequestParam("value")String value,@RequestParam(value = "type")String type, Model model) {
-        switch (type) {
-            case "weight": model.addAttribute("cargoes",cargoService.getCargoByWeight(Float.parseFloat(value))); break;
-            case "height": model.addAttribute("cargoes",cargoService.getCargoByHeight(Float.parseFloat(value))); break;
-            case "width": model.addAttribute("cargoes",cargoService.getCargoByWidth(Float.parseFloat(value))); break;
-            case "capacity": model.addAttribute("cargoes",cargoService.getCargoByCapacity(Float.parseFloat(value))); break;
-            case "length": model.addAttribute("cargoes",cargoService.getCargoByLength(Float.parseFloat(value))); break;
-            case "loading_type" : model.addAttribute("cargoes",cargoService.getCargoByLoadingType(value)); break;
-            default: model.addAttribute("cargoes", cargoService.getAllCargoes()); break;
-        }
+    @RequestMapping(value = "/search_cargo/")
+    public String findCargoByPoints(@RequestParam("shippingPoint")String shippingPoint,@RequestParam("deliveryPoint")String deliveryPoint, Model model) {
+        logger.info("Search cargoes by points");
+        model.addAttribute("cargoes", routeService.findRoutesByPoints(shippingPoint,deliveryPoint)
+                                                    .stream()
+                                                            .map(Route::getCargo)
+                                                            .collect(Collectors.toList()));
         return "search_cargo";
+    }
+
+    @GetMapping("/price")
+    public String loadPricePage(Model model) {
+        model.addAttribute("price","");
+        return "price";
+    }
+
+    @RequestMapping(value = "/calculate/")
+    public String calculatePrice(@RequestParam("distance")String distance,@RequestParam("weight")String weight,@RequestParam("capacity")String capacity, Model model) {
+        Float price = Float.parseFloat(distance) + Float.parseFloat(weight) + Float.parseFloat(capacity);
+        model.addAttribute("price",price + " грн.");
+        return "price";
+    }
+
+
+    @GetMapping("/registration")
+    public String loadRegistration() {
+        return "register";
+    }
+
+    @GetMapping("/shipper_profile")
+    public String loadShipperProfile(Model model) {
+        shipperService.getShipperById(Long.valueOf("29")).ifPresent(o -> model.addAttribute("shipper", o));
+        return "/shipper/shipper_profile";
     }
 
 }

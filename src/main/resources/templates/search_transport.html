@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Поиск транспорта</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          crossorigin="anonymous">
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" />
+
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo">
+            <h1 class="text-light"><a th:href="@{/}">TransExpress</a></h1>
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a  th:href="@{/}">Главная</a></li>
+                <li><a  th:href="@{/cargoes}">Грузы</a></li>
+                <li><a class="active" th:href="@{/transports}">Транспорты</a></li>
+                <li><a th:href="@{/price}">Расчет стоимости</a></li>
+
+                <li><a class="getstarted" href="#">Вход</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="fade-in">
+            <div class="text-center">
+                <h3>Поиск транспорта</h3>
+                <p>Введите грузоподъемность, объем и выполните поиск!</p>
+            </div>
+        </div>
+    </section><!-- End Cta Section -->
+
+    <section id="about" class="about">
+        <form action="/search_cargo/" name="search" class="form-inline my-2 my-lg-0" style="margin-right: 30px">
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-lg-11">
+                        <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-12 p-3">
+                                    <p class = "p-lg-2">Грузоподъемность: </p>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12 p-3">
+                                    <input type="text" class="form-control search-slt" name="carrying" id="carrying" placeholder="Количество т">
+                                </div>
+                                <div class="col-lg-1 col-md-4 col-sm-12 p-3 ">
+                                    <p class = "p-lg-2">Объем: </p>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12 p-3">
+                                    <input type="text" class="form-control search-slt" name="capacity" id="capacity" placeholder="Объем в м3">
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-12 p-3">
+                                    <button type="submit" class="btn btn-outline-success btn-lg btn-block">Найти</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" th:each="transport : ${transports}">
+                    <div class="icon-box" data-aos="fade-up">
+                        <h4 class="title"><a th:href="@{'/' + ${transport.getId()} + '/one_transport'}" th:text="${transport.getRegion()}"></a></h4>
+                        <p><span class="description">Марка: </span><span class="description" th:text="${transport.getBrand()}"></span> <br/>
+                        <span class="description">Грузоподъемность: </span><span class="description" th:text="${transport.getCarrying()} + ' т'"></span> <br/>
+                        <span class="description">Объем: </span><span class="description" th:text="${transport.getCapacity()} + ' м3'"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  <!--End Services Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-5 footer-info">
+                    <h3>TransExpress</h3>
+                    <p></p>
+                </div>
+                <div class="col-lg-4 col-md-5 footer-links">
+                    <h4>Полезные ссылки</h4>
+                    <ul>
+                        <li><a th:href="@{/}">Главная</a></li>
+                        <li><a th:href="@{/cargoes}">Поиск грузов</a></li>
+                        <li><a th:href="@{/transports}">Поиск транспорта</a></li>
+                        <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-5 footer-contact">
+                    <h4>Связаться с нами</h4>
+                    <p>
+                        <strong>Phone:</strong> +38(066)502-51-33<br>
+                        <strong>Email:</strong> transExpress@gmail.com<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; <strong><span>TransExpress, </span></strong>2021
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+</body>
+
+<!-- Template Main JS File -->
+<script src="/js/main.js" th:href="@{/js/main.js}"></script>
+
+</html>

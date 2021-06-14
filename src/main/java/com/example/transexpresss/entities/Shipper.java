@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "shipper")
@@ -21,7 +21,7 @@ public class Shipper {
     private Date registrationDate;
 
     @OneToMany(mappedBy = "shipper", cascade = CascadeType.ALL)
-    private Set<Cargo> cargoes;
+    private List<Cargo> cargoes;
 
    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL,
             mappedBy = "shipper")

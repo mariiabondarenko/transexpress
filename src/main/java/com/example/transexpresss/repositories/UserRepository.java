@@ -1,4 +1,7 @@
 package com.example.transexpresss.repositories;
 
-public interface UserRepository {
+import com.example.transexpresss.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }

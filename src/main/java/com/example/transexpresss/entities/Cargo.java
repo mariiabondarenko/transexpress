@@ -1,9 +1,7 @@
 package com.example.transexpresss.entities;
 
 import lombok.Data;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "cargo")
@@ -12,7 +10,6 @@ public class Cargo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    //@NotNull(message = "Не должно быть пустым")
     private String name;
     private Float weight;
     private Float capacity;
@@ -39,8 +36,5 @@ public class Cargo {
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL,
             mappedBy = "cargo")
     private Request request;
-
-
-
 
 }

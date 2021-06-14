@@ -25,7 +25,6 @@ public class TransportController {
         this.carrierService = carrierService;
     }
 
-    //TODO carrier
     @GetMapping("/carrier/add_transport")
     public String addTransport(Model model){
         logger.info("Loading a carrier/add_transport site");
@@ -33,9 +32,8 @@ public class TransportController {
         return "carrier/add_transport";
     }
 
-    //TODO add carrier
     @PostMapping("/carrier/add_transport")
-    public String addCargoSubmit(@Valid Transport transport, BindingResult result) {
+    public String addTransportSubmit(@Valid Transport transport, BindingResult result) {
         if(result.hasErrors()){
             logger.info("Not valid objects try to add in database");
             return "carrier/add_transport";
@@ -49,7 +47,6 @@ public class TransportController {
             return "redirect:/";
         }
     }
-
 
     @GetMapping("/transports")
     public String showTransports(Model model){
@@ -65,15 +62,14 @@ public class TransportController {
         return "one_transport";
     }
 
-    //TODO change map
     @RequestMapping(value = "/{id}/del_transport")
     public String delTransportById(@PathVariable(value = "id") long id){
         transportService.deleteTransportById(id);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/search_transporto")
-    public String findCargoByParameter(@RequestParam("value")String value, @RequestParam(value = "type")String type, Model model) {
+    @RequestMapping(value = "/search_transport")
+    public String findTransportByParameter(@RequestParam("value")String value, @RequestParam(value = "type")String type, Model model) {
         switch (type) {
             case "capacity": model.addAttribute("transports",transportService.getTransportByCapacity(Float.parseFloat(value))); break;
             case "height": model.addAttribute("transports",transportService.getTransportByHeight(Float.parseFloat(value))); break;
@@ -84,7 +80,12 @@ public class TransportController {
             case "region" : model.addAttribute("transports",transportService.getTransportByRegion(value)); break;
             default: model.addAttribute("transports", transportService.getAllTransports()); break;
         }
-        return "search_cargo";
+        return "search_transport";
     }
 
+    @GetMapping("/carrier_profile")
+    public String loadCarrierProfile(Model model) {
+        carrierService.getCarrierById(Long.valueOf("1")).ifPresent(o -> model.addAttribute("carrier", o));
+        return "/carrier/carrier_profile";
+    }
 }

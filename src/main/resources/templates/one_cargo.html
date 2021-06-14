@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Информация о грузе</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" />
+
+</head>
+
+<body>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="logo">
+            <h1 class="text-light"><a th:href="@{/}">TransExpress</a></h1>
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a th:href="@{/}">Главная</a></li>
+                <li><a th:href="@{/cargoes}">Грузы</a></li>
+                <li><a th:href="@{/transports}">Транспорты</a></li>
+                <li><a th:href="@{/price}">Расчет стоимости</a></li>
+
+                <li><a class="getstarted" href="#">Вход</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="project-info-box mt-0">
+                    <h5>ИНФОРМАЦИЯ О ГРУЗЕ</h5>
+                    <p th:text="${cargo.getName()}"></p>
+                    <p class="mb-0" th:text="${cargo.getAdditionalInfo()}"></p>
+                </div><!-- / project-info-box -->
+
+                <div class="project-info-box">
+                    <p><b>Вес: </b><span th:text="${cargo.getWeight()}"></span> т</p>
+                    <p><b>Объем: </b><span th:text="${cargo.getCapacity()}"></span>(м<sup>3</sup>)</p>
+                    <p><b>Тип погрузки: </b><span th:text="${cargo.getLoadingType()}"></span></p>
+                    <p><b>Длина/Ширина/Высота: </b><span th:text="${cargo.getLength()} + 'м/' + ${cargo.getWidth()} + 'м/' + ${cargo.getHeight()} + 'м'"></span></p>
+                    <p class="mb-0"><b>Тара: </b><span th:text="${cargo.getTare()}"></span></p>
+                </div><!-- / project-info-box -->
+
+            </div><!-- / column -->
+
+            <div class="col-md-5">
+                <div class="project-info-box">
+                    <p><b>Пункт отправки: </b><span th:text="${cargo.getRoute().getShippingPoint()}"></span></p>
+                    <p><b>Дата отправки: </b><span th:text="${cargo.getRoute().getShippingDate()}"></span></p>
+                    <p><b>Пункт доставки: </b><span th:text="${cargo.getRoute().getDeliveryPoint()}"></span></p>
+                    <p><b>Дата доставки: </b><span th:text="${cargo.getRoute().getDeliveryDate()}"></span></p> <br/>
+                    <p>ОПЛАТА:</p>
+                    <p><b>Сумма оплаты: </b><span th:text="${cargo.getPayment().getAmount()} + ${cargo.getPayment().getCurrency()} + ' - ' + ${cargo.getPayment().getDimention()}"></span></p>
+                    <p><b>Момент оплаты: </b><span th:text="${cargo.getPayment().getMoment()}"></span></p>
+                    <p><b>Тип оплаты: </b><span th:text="${cargo.getPayment().getType()}"></span></p>
+
+                </div><!-- / project-info-box -->
+            </div><!-- / column -->
+        </div>
+    </div>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-5 footer-info">
+                    <h3>TransExpress</h3>
+                    <p></p>
+                </div>
+                <div class="col-lg-4 col-md-5 footer-links">
+                    <h4>Полезные ссылки</h4>
+                    <ul>
+                        <li><a th:href="@{/}">Главная</a></li>
+                        <li><a th:href="@{/cargoes}">Поиск грузов</a></li>
+                        <li><a th:href="@{/transports}">Поиск транспорта</a></li>
+                        <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-5 footer-contact">
+                    <h4>Связаться с нами</h4>
+                    <p>
+                        <strong>Phone:</strong> +38(066)502-51-33<br>
+                        <strong>Email:</strong> transExpress@gmail.com<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; <strong><span>TransExpress, </span></strong>2021
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+</body>
+
+<!-- Template Main JS File -->
+<script src="/js/main.js" th:href="@{/js/main.js}"></script>
+
+</html>

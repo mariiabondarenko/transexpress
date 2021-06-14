@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,7 @@ public class Carrier {
     private Date registrationDate;
 
     @OneToMany(mappedBy = "carrier", cascade = CascadeType.ALL)
-    private Set<Transport> transports;
+    private List<Transport> transports;
 
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL,
             mappedBy = "carrier")
