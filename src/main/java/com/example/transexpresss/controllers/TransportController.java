@@ -1,6 +1,7 @@
 package com.example.transexpresss.controllers;
 
 import com.example.transexpresss.entities.Carrier;
+import com.example.transexpresss.entities.Route;
 import com.example.transexpresss.entities.Transport;
 import com.example.transexpresss.services.CarrierService;
 import com.example.transexpresss.services.TransportService;
@@ -12,6 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class TransportController {
@@ -54,6 +60,12 @@ public class TransportController {
         model.addAttribute("transports", transportService.getAllTransports());
         return "search_transport";
     }
+    @GetMapping("/shipper/transports")
+    public String showShipperTransports(Model model){
+        logger.info("Open view for searching transports and add all transports");
+        model.addAttribute("transports", transportService.getAllTransports());
+        return "/shipper/search_transport";
+    }
 
     @GetMapping("/{id}/one_transport")
     public String showTransportById(@PathVariable String id, Model model) {
@@ -65,21 +77,18 @@ public class TransportController {
     @RequestMapping(value = "/{id}/del_transport")
     public String delTransportById(@PathVariable(value = "id") long id){
         transportService.deleteTransportById(id);
-        return "redirect:/";
+        return "redirect:/carrier_profile";
     }
 
-    @RequestMapping(value = "/search_transport")
-    public String findTransportByParameter(@RequestParam("value")String value, @RequestParam(value = "type")String type, Model model) {
-        switch (type) {
-            case "capacity": model.addAttribute("transports",transportService.getTransportByCapacity(Float.parseFloat(value))); break;
-            case "height": model.addAttribute("transports",transportService.getTransportByHeight(Float.parseFloat(value))); break;
-            case "width": model.addAttribute("transports",transportService.getTransportByWidth(Float.parseFloat(value))); break;
-            case "length": model.addAttribute("transports",transportService.getTransportByLength(Float.parseFloat(value))); break;
-            case "carrying" : model.addAttribute("transports",transportService.getTransportByCapacity(Float.parseFloat(value))); break;
-            case "loading_type" : model.addAttribute("transports",transportService.getTransportByLoadingType(value)); break;
-            case "region" : model.addAttribute("transports",transportService.getTransportByRegion(value)); break;
-            default: model.addAttribute("transports", transportService.getAllTransports()); break;
-        }
+    @RequestMapping(value = "/search_transport/")
+    public String findCargoByPoints(@RequestParam("carrying")String carrying,@RequestParam("capacity")String capacity, Model model) {
+        logger.info("Search transports by param");
+        List<Transport> list_carrying = transportService.getTransportByCarrying(Float.parseFloat(carrying));
+        List<Transport> list_capacity = transportService.getTransportByCapacity(Float.parseFloat(capacity));
+        Set<Transport> transportSet = new LinkedHashSet<>(list_carrying);
+        transportSet.addAll(list_capacity);
+        List<Transport> finalList = new ArrayList<>(transportSet);
+        model.addAttribute("transports", finalList);
         return "search_transport";
     }
 
@@ -87,5 +96,12 @@ public class TransportController {
     public String loadCarrierProfile(Model model) {
         carrierService.getCarrierById(Long.valueOf("1")).ifPresent(o -> model.addAttribute("carrier", o));
         return "/carrier/carrier_profile";
+    }
+
+    @GetMapping("/shipper/{id}/one_transport")
+    public String showTransportByIdForShipper(@PathVariable String id, Model model) {
+        logger.info("Open view for one transport by id");
+        transportService.getTransportById(Long.valueOf(id)).ifPresent(o -> model.addAttribute("transport", o));
+        return "/shipper/one_transport";
     }
 }

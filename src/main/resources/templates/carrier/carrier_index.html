@@ -38,6 +38,7 @@
                 <li><a th:href="@{/cargoes}">Грузы</a></li>
                 <li><a th:href="@{/transports}">Транспорты</a></li>
                 <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                <li><a th:href="@{/carrier/add_transport}">Добавить транспорт</a></li>
                 <li><a th:href="@{/carrier_profile}">Профиль</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
@@ -51,13 +52,11 @@
     <div class="hero-container" data-aos="fade-up">
         <h1>Добро пожаловать в TransExpress!</h1>
         <h2>Мы поможем найти Вам c перевозкой</h2>
-        <a href="#" class="btn-get-started scrollto">Зарегистрироваться</a>
     </div>
 </section><!-- End Hero -->
 
 <main id="main">
 
-    <!-- ======= About Section ======= -->
     <section id="about" class="about">
         <div class="container">
 
@@ -66,26 +65,30 @@
                     <div class="row justify-content-end">
                         <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
                             <div class="count-box py-5">
-                                <span th:text="${statistic.get(0)}">0</span>
+                                <!--<span th:text="${statistic.get(0)}">0</span>-->
+                                <span>125</span>
                                 <p>Клиентов</p>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
                             <div class="count-box py-5">
-                                <span th:text="${statistic.get(1)}">0</span>
+                                <!--<span th:text="${statistic.get(1)}">0</span>-->
+                                <span>178</span>
                                 <p >Транспортных средств</p>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
                             <div class="count-box pb-5 pt-0 pt-lg-5">
-                                <span th:text="${statistic.get(2)}">0</span>
+                                <!--<span th:text="${statistic.get(2)}">0</span>-->
+                                <span>201</span>
                                 <p>Активных грузов</p>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-5 col-6 d-md-flex align-items-md-stretch">
                             <div class="count-box pb-5 pt-0 pt-lg-5">
                                 <i class="bi bi-award"></i>
-                                <span th:text="${statistic.get(3)}">0</span>
+                                <!--<span th:text="${statistic.get(3)}">0</span>-->
+                                <span>242</span>
                                 <p>Выполненых заявок</p>
                             </div>
                         </div>
@@ -94,17 +97,6 @@
             </div>
         </div>
     </section><!-- End About Section -->
-
-    <!-- ======= Cta Section ======= -->
-    <section id="cta" class="cta">
-        <div class="container" data-aos="fade-in">
-            <div class="text-center">
-                <h3>Для перевозчиков</h3>
-                <p> Для нахождения груза Вы можете прямо сейчас зарегистрироваться как перевозчик и начать поиски!</p>
-                <a class="cta-btn" href="#">Зарегистрироваться как перевозчик</a>
-            </div>
-        </div>
-    </section><!-- End Cta Section -->
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services ">

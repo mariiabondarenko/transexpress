@@ -2,6 +2,7 @@ package com.example.transexpresss.entities;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "cargo")

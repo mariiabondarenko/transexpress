@@ -26,14 +26,12 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a th:href="@{/}">Главная</a></li>
-                <li><a th:href="@{/cargoes}">Грузы</a></li>
-                <li><a th:href="@{/transports}">Транспорты</a></li>
-                <li><a th:href="@{/price}">Расчет стоимости</a></li>
-                <li><a th:href="@{/price}">Профиль</a></li>
-                <!--<li><button type="button" class="btn getstarted" data-bs-toggle="modal" data-bs-target="#registerModal">
-                    Профиль
-                </button></li>-->
+                <li><a  th:href="@{/enter}">Главная</a></li>
+                <li><a th:href="@{/shipper/cargoes}">Грузы</a></li>
+                <li><a th:href="@{/shipper/transports}">Транспорты</a></li>
+                <li><a th:href="@{/shipper/price}">Расчет стоимости</a></li>
+                <li><a class="active" th:href="@{/shipper/add_cargo}">Добавить груз</a></li>
+                <li><a  th:href="@{/shipper_profile}">Профиль</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -48,18 +46,18 @@
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3 text-center">Добавление груза</h4>
                 <hr class="my-1">
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" th:action="@{/shipper/add_cargo}" th:object="${cargo}" method="post">
                     <div class="row p-2">
 
                         <div class="col-sm-12">
                             <label for="firstName" class="form-label">Наименование</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Описание груза" value="" required>
+                            <input th:field="*{name}" type="text" class="form-control" id="firstName" placeholder="Описание груза" value="" required>
                         </div>
 
                         <div class="col-sm-4">
                             <label for="weight" class="form-label">Вес</label>
                             <div class="col input-group">
-                            <input type="number" class="form-control" id="weight" placeholder="Вес груза" value="" required>
+                            <input th:field="*{weight}" type="number" class="form-control" id="weight" placeholder="Вес груза" value="" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">т</span>
                                 </div>
@@ -68,7 +66,7 @@
                         <div class="col-sm-4">
                             <label for="capacity" class="form-label">Объем</label>
                             <div class="col input-group">
-                            <input type="number" class="form-control" id="capacity" placeholder="Объем груза" value="" required>
+                            <input th:field="*{capacity}" type="number" class="form-control" id="capacity" placeholder="Объем груза" value="" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">м<sup>3</sup></span>
                                 </div>
@@ -76,12 +74,12 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="loadingType" class="form-label">Тип погрузки</label>
-                            <input type="text" class="form-control" id="loadingType" placeholder="Например: Верхняя, задняя..." value="" required>
+                            <input th:field="*{loadingType}" type="text" class="form-control" id="loadingType" placeholder="Например: Верхняя, задняя..." value="" required>
                         </div>
                         <div class="col-sm-4">
                             <label for="weight1" class="form-label">Длина</label>
                             <div class="col input-group">
-                            <input type="text" class="form-control" id="weight1" placeholder="Длина груза" value="" required>
+                            <input th:field="*{length}" type="text" class="form-control" id="weight1" placeholder="Длина груза" value="" required>
                             <div class="input-group-append">
                                 <span class="input-group-text">м</span>
                             </div>
@@ -90,7 +88,7 @@
                         <div class="col-sm-4">
                             <label for="capacity1" class="form-label">Ширина</label>
                             <div class="col input-group">
-                            <input type="number" class="form-control" id="capacity1" placeholder="Ширина груза" value="" required>
+                            <input th:field="*{width}" type="number" class="form-control" id="capacity1" placeholder="Ширина груза" value="" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">м</span>
                                 </div>
@@ -99,7 +97,7 @@
                         <div class="col-sm-4">
                             <label for="loadingType1" class="form-label">Высота</label>
                             <div class="col input-group">
-                            <input type="text" class="form-control" id="loadingType1" placeholder="Высота груза" value="" required>
+                            <input th:field="*{height}" type="text" class="form-control" id="loadingType1" placeholder="Высота груза" value="" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text">м</span>
                                 </div>
@@ -107,32 +105,79 @@
                         </div>
                         <div class="col-sm-8">
                             <label for="username" class="form-label">Дополнительная информация</label>
-                            <textarea class="form-control" id="username" placeholder="Любая дополнительна информация о грузе, способе доставки и т.д."></textarea>
+                            <textarea th:field="*{additionalInfo}" class="form-control" id="username" placeholder="Любая дополнительна информация о грузе, способе доставки и т.д."></textarea>
                         </div>
                         <div class="col-sm-4">
                             <label for="loadingType12" class="form-label">Тара</label>
-                            <input type="text" class="form-control" id="loadingType12" placeholder="" value="" required>
+                            <input th:field="*{tare}" type="text" class="form-control" id="loadingType12" placeholder="" value="" required>
                         </div>
                         <hr class="my-4">
+                    <div th:object="${route}" class="row">
                         <div class="col-3 p-2">
                             <label for="email" class="form-label">Пункт отправки</label>
-                            <input type="text" class="form-control" id="email" placeholder="Населенный пункт">
+                            <input th:field="*{shippingPoint}" type="text" class="form-control" id="email" placeholder="Населенный пункт">
                         </div>
 
                         <div class="col-3 p-2">
                             <label for="address" class="form-label">Пункт доставки</label>
-                            <input type="text" class="form-control" id="address" placeholder="Населенный пункт" required>
+                            <input th:field="*{deliveryPoint}" type="text" class="form-control" id="address" placeholder="Населенный пункт" required>
                         </div>
 
                         <div class="col-3 p-2">
                             <label for="address21" class="form-label">Дата погрузки</label>
-                            <input type="date" class="form-control" id="address21">
+                            <input th:field="*{shippingDate}" type="date" class="form-control" id="address21">
                         </div>
                         <div class="col-3 p-2">
                             <label for="address22" class="form-label">Дата выгрузки</label>
-                            <input type="date" class="form-control" id="address22">
+                            <input th:field="*{deliveryDate}" type="date" class="form-control" id="address22">
                         </div>
+                    </div>
+                        <hr class="my-4">
+                        <div th:object="${payment}" class="row">
 
+                            <div class="col-4 p-2">
+                                <input th:field="*{amount}" type="number" class="form-control" id="emadil" placeholder="Сумма оплаты">
+                            </div>
+                            <div class="col-2 p-2">
+                                <select th:field="*{currency}" class="form-select" aria-label="Default select example">
+                                    <option value="UAH" selected>UAH</option>
+                                    <option value="UAH">UAH</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-3 p-2">
+                                <select th:field="*{type}" class="form-select" aria-label="Default select example">
+                                    <option value="Наличный расчет" selected>Способ оплаты</option>
+                                    <option value="Наличный расчет">Наличный расчет</option>
+                                    <option value="Расчет на карту">Расчет на карту</option>
+                                    <option value="Безналичный расчет">Безналичный расчет</option>
+                                </select>
+                            </div>
+                            <div class="col-3 p-2">
+                                <select th:field="*{moment}" class="form-select" aria-label="Default select example">
+                                    <option value="Предоплата" selected>Момент оплаты</option>
+                                    <option value="Предоплата">Предоплата</option>
+                                    <option value="На загрузке">На загрузке</option>
+                                    <option value="На выгрузке">На выгрузке</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                            <div class="form-check form-check-inline col-2">
+                                <input th:field="*{dimention}" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="всего грн" checked>
+                                <label class="form-check-label" for="inlineRadio1">всего грн</label>
+                            </div>
+                            <div class="form-check form-check-inline col-2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">грн/км</label>
+                            </div>
+                            <div class="form-check form-check-inline col-2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                <label class="form-check-label" for="inlineRadio3">грн/т</label>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                     <hr class="my-4">
                     <div class="row justify-content-center">
@@ -162,6 +207,7 @@
                         <li><a th:href="@{/cargoes}">Поиск грузов</a></li>
                         <li><a th:href="@{/transports}">Поиск транспорта</a></li>
                         <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                        <li><a th:href="@{/}">Выход</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-5 footer-contact">

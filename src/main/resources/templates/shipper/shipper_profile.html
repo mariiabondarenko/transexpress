@@ -81,17 +81,17 @@
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="logo">
-            <h1 class="text-light"><a th:href="@{/}">TransExpress</a></h1>
+            <h1 class="text-light"><a th:href="@{/enter}">TransExpress</a></h1>
         </div>
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a  th:href="@{/}">Главная</a></li>
-                <li><a th:href="@{/cargoes}">Грузы</a></li>
-                <li><a th:href="@{/transports}">Транспорты</a></li>
-                <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                <li><a  th:href="@{/enter}">Главная</a></li>
+                <li><a th:href="@{/shipper/cargoes}">Грузы</a></li>
+                <li><a th:href="@{/shipper/transports}">Транспорты</a></li>
+                <li><a th:href="@{/shipper/price}">Расчет стоимости</a></li>
                 <li><a th:href="@{/shipper/add_cargo}">Добавить груз</a></li>
-                <li><a class="active" th:href="@{/carrier_profile}">Профиль</a></li>
+                <li><a class="active" th:href="@{/shipper_profile}">Профиль</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -110,7 +110,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <div class="mt-3">
-                                    <img src="../../static/img/shipper.png" alt="Иконка пользователя" width="150">
+                                    <!--<img src="../../static/img/shipper.png" alt="Иконка пользователя" width="150">-->
                                     <h4 th:text="${shipper.getName()} + ' ' +  ${shipper.getSurname()}"></h4>
                                     <p class="text-secondary mb-1" th:text="'+380-' + ${shipper.getPhoneNumber()}"></p>
                                     <p class="text-secondary mb-1" th:text="${shipper.getEmail()}"></p>
@@ -128,7 +128,7 @@
 
                         <ul class="list-group list-group-flush" >
                             <li th:each="cargo : ${shipper.getCargoes()}" class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <a style="color: rgba(119,91,68,0.79)" th:href="@{'/' + ${cargo.getId()} + '/one_transport'}">
+                                <a style="color: rgba(119,91,68,0.79)" th:href="@{'/shipper/' + ${cargo.getId()} + '/one_cargo'}">
                                     <h6 th:text="${cargo.getName()}" class="mb-0">Website</h6></a>
                                 <button type="button" class="btn btn-success btn-sm"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -182,6 +182,7 @@
                         <li><a th:href="@{/cargoes}">Поиск грузов</a></li>
                         <li><a th:href="@{/transports}">Поиск транспорта</a></li>
                         <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                        <li><a th:href="@{/}">Выход</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-5 footer-contact">

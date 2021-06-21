@@ -34,12 +34,12 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a  th:href="@{/}">Главная</a></li>
-                <li><a th:href="@{/cargoes}">Грузы</a></li>
-                <li><a th:href="@{/transports}">Транспорты</a></li>
-                <li><a class="active" th:href="@{/price}">Расчет стоимости</a></li>
-
-                <li><a class="getstarted" href="#">Вход</a></li>
+                <li><a  th:href="@{/enter}">Главная</a></li>
+                <li><a th:href="@{/shipper/cargoes}">Грузы</a></li>
+                <li><a th:href="@{/shipper/transports}">Транспорты</a></li>
+                <li><a class="active" th:href="@{/shipper/price}">Расчет стоимости</a></li>
+                <li><a th:href="@{/shipper/add_cargo}">Добавить груз</a></li>
+                <li><a  th:href="@{/shipper_profile}">Профиль</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -63,7 +63,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-2">
                     <div class="box" data-aos="fade-up">
-                        <form action="/calculate/" name="calculate" class="form-inline my-2 my-lg-0">
+                        <form action="/shipper/calculate/" name="calculate" class="form-inline my-2 my-lg-0">
                             <div class="project-info-box">
                             <div class="row justify-content-center p-2">
                                 <div class="col text-start">
@@ -142,6 +142,7 @@
                         <li><a th:href="@{/cargoes}">Поиск грузов</a></li>
                         <li><a th:href="@{/transports}">Поиск транспорта</a></li>
                         <li><a th:href="@{/price}">Расчет стоимости</a></li>
+                        <li><a th:href="@{/}">Выход</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-5 footer-contact">

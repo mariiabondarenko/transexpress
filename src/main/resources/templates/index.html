@@ -29,19 +29,19 @@
                 <h5 class="modal-title" id="enterModalLabel">Вход</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form action="/enter">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Логин</label>
-                        <input type="email" class="form-control" placeholder="Введите логин" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="inputEmail" class="form-label">Логин</label>
+                        <input required type="email" class="form-control" placeholder="Введите логин" name="inputEmail" id="inputEmail" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Пароль</label>
-                        <input type="password" class="form-control" placeholder="Введите пароль" id="exampleInputPassword1">
+                        <input required type="password" class="form-control" placeholder="Введите пароль" id="exampleInputPassword1">
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary">Ввойти</button>
+                            <button type="submit" class="btn btn-primary">Войти</button>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
             <div class="text-center">
                 <h3>Для перевозчиков</h3>
                 <p> Для нахождения груза Вы можете прямо сейчас зарегистрироваться как перевозчик и начать поиски!</p>
-                <a class="cta-btn" href="#">Зарегистрироваться как перевозчик</a>
+                <a class="cta-btn" th:href="@{/registration}">Зарегистрироваться как перевозчик</a>
             </div>
         </div>
     </section><!-- End Cta Section -->
